@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<extension method="upgrade" type="library" version="1.0">
+  <name>XT Twilio for Joomla Library</name>
+  <libraryname>xttwilio</libraryname>
+  <version>1.0.0</version>
+  <creationDate>2018-10-23</creationDate>
+
+	<author>Extly, CB</author>
+	<authorEmail>team@extly.com</authorEmail>
+	<authorUrl>https://www.extly.com</authorUrl>
+	<copyright>Copyright (c)2007-2018 Extly, CB All rights reserved.</copyright>
+	<license>GNU/GPLv3 www.gnu.org/licenses/gpl-3.0.html</license>
+
+  <description>
+    <![CDATA[
+A solution to call your clients for Joomla, via SMS, Voice or video channels.
+  ]]>
+  </description>
+	<media destination="lib_xttwilio" folder="media">
+		<folder>app</folder>
+	</media>
+  <files>
+    <folder>vendor</folder>
+    <filename>composer.json</filename>
+    <filename>lib_xttwilio.xml</filename>
+  </files>
+</extension>
