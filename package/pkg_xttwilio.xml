@@ -6,7 +6,7 @@
   <name>XT Twilio for Joomla</name>
   <description>A solution to call your clients for Joomla, via SMS, Voice or video channels.</description>
   <version>1.0.0</version>
-  <creationDate>2018-10-23</creationDate>
+  <creationDate>2018-10-24</creationDate>
 
 	<author>Extly, CB</author>
 	<authorEmail>team@extly.com</authorEmail>
@@ -16,32 +16,15 @@
 
   <!-- List of extensions to install -->
   <files>
-    <!-- Component -->
-    <file type="component" id="com_xttwilio">component</file>
-
-    <!-- CLI scripts -->
-    <file type="file" id="xttwilio">file</file>
-
-    <!-- Template -->
-    <file type="template" client="site" id="tpl_xttwilio">template</file>
-
     <!-- Modules -->
-    <file type="module" client="site" id="mod_xttwilio">mod_xttwilio</file>
-    <!-- <file type="module" client="administrator" id="mod_xttwilio">mod_xttwilio</file> -->
+    <file type="module" client="site" id="mod_xttwilio_sms">mod_xttwilio_sms</file>
+    <file type="module" client="site" id="mod_xttwilio_click2call">mod_xttwilio_click2call</file>
 
     <!-- Library -->
-    <file type="library" id="lib_xttwilio">library</file>
+    <file type="library" id="xttwilio">library</file>
 
     <!-- Plugins: xttwilio  -->
-    <file type="plugin" group="authentication" id="xttwilio">plg_authentication_xttwilio</file>
-    <file type="plugin" group="behaviour" id="xttwilio">plg_behaviour_xttwilio</file>
-    <file type="plugin" group="content" id="xttwilio">plg_content_xttwilio</file>
-    <file type="plugin" group="editors-xtd" id="xttwilio">plg_editors-xtd_xttwilio</file>
-    <file type="plugin" group="fields" id="xttwilio">plg_fields_xttwilio</file>
-    <file type="plugin" group="finder" id="xttwilio">plg_finder_xttwilio</file>
-    <file type="plugin" group="search" id="xttwilio">plg_search_xttwilio</file>
-    <file type="plugin" group="system" id="xttwilio">plg_system_xttwilio</file>
-    <file type="plugin" group="user" id="xttwilio">plg_user_xttwilio</file>
+    <file type="plugin" group="ajax" id="xttwilio">plg_ajax_xttwilio</file>
   </files>
   <!-- Installation script -->
   <scriptfile>script.xttwilio.php</scriptfile>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <extension method="upgrade" type="library" version="1.0">
-  <name>[EXTENSION_NAME] Library</name>
+  <name>[EXTENSION_NAME] - Library</name>
   <libraryname>[EXTENSION_ALIAS]</libraryname>
   <version>[RELEASE_VERSION]</version>
   <creationDate>[DATE]</creationDate>
@@ -12,9 +12,9 @@
 [EXTENSION_DESC]
   ]]>
   </description>
-	<media destination="lib_[EXTENSION_ALIAS]" folder="media">
+	<!-- <media destination="lib_[EXTENSION_ALIAS]" folder="media">
 		<folder>app</folder>
-	</media>
+	</media> -->
   <files>
     <folder>vendor</folder>
     <filename>composer.json</filename>

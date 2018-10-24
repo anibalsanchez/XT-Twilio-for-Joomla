@@ -8,10 +8,12 @@
  * @link       https://www.extly.com
  */
 
-use Joomla\CMS\Helper\ModuleHelper;
-
 defined('_JEXEC') or die;
 
-$moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
+// Access to module parameters
+$domain = $params->get('domain', 'https://www.joomla.org');
+?>
 
-require ModuleHelper::getLayoutPath('mod_xttwilio', $params->get('layout', 'default'));
+<a href="<?php echo $domain; ?>">
+	<?php echo 'Hello!'; ?>
+</a>

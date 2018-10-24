@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="3.8" client="site" method="upgrade">
+  <name>mod_[EXTENSION_ALIAS]_sms</name>
+  <version>[RELEASE_VERSION]</version>
+  <creationDate>[DATE]</creationDate>
+
+[MANIFEST_COPYRIGHT]
+
+  <description>MOD_[EXTENSION_ALIAS]_SMS_XML_DESCRIPTION</description>
+  <files>
+    <filename module="mod_[EXTENSION_ALIAS]_sms">mod_[EXTENSION_ALIAS]_sms.php</filename>
+    <folder>tmpl</folder>
+    <filename>mod_[EXTENSION_ALIAS]_sms.xml</filename>
+  </files>
+  <languages>
+    <language tag="en-GB">language/en-GB/en-GB.mod_[EXTENSION_ALIAS]_sms.ini</language>
+    <language tag="en-GB">language/en-GB/en-GB.mod_[EXTENSION_ALIAS]_sms.sys.ini</language>
+  </languages>
+  <config>
+    <fields name="params">
+      <fieldset name="basic">
+      </fieldset>
+      <fieldset name="advanced">
+        <field name="moduleclass_sfx" type="text" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+      </fieldset>
+    </fields>
+  </config>
+</extension>
