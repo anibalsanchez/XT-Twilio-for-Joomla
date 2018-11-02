@@ -1,8 +1,18 @@
 {
     "name": "XT Twilio for Joomla Library",
     "description": "XT Twilio for Joomla Library.",
+    "autoload": {
+      "psr-4": {
+        "XTTwilio\\": "src/"
+      }
+    },
     "require": {
         "twilio/sdk": "^5.24",
         "anibalsanchez/create-pattern": "^2.0"
+    },
+    "require-dev": {
+        "php-http/curl-client": "^1.7",
+        "guzzlehttp/psr7": "^1.4",
+        "php-http/message": "^1.7"
     }
 }

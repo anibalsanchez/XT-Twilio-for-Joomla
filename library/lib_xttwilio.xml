@@ -3,7 +3,7 @@
   <name>XT Twilio for Joomla - Library</name>
   <libraryname>xttwilio</libraryname>
   <version>1.0.0</version>
-  <creationDate>2018-10-24</creationDate>
+  <creationDate>2018-11-02</creationDate>
 
 	<author>Extly, CB</author>
 	<authorEmail>team@extly.com</authorEmail>
@@ -20,6 +20,7 @@ A solution to call your clients for Joomla, via SMS, Voice or video channels.
 		<folder>app</folder>
 	</media> -->
   <files>
+    <folder>src</folder>
     <folder>vendor</folder>
     <filename>composer.json</filename>
     <filename>lib_xttwilio.xml</filename>

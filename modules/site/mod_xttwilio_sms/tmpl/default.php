@@ -1,19 +1,47 @@
 <?php
 /**
- * @package    XT Twilio for Joomla
- *
  * @author     Extly, CB <team@extly.com>
  * @copyright  Copyright (c)2007-2018 Extly, CB All rights reserved.
  * @license    GNU General Public License version 3 or later; see LICENSE.txt
- * @link       https://www.extly.com
+ *
+ * @see       https://www.extly.com
  */
-
 defined('_JEXEC') or die;
 
-// Access to module parameters
-$domain = $params->get('domain', 'https://www.joomla.org');
-?>
+$moduleclass_sfx .= ' '.'mod_xttwilio_sms'.$module->id;
 
-<a href="<?php echo $domain; ?>">
-	<?php echo 'Hello!'; ?>
-</a>
+?>
+<div class="xttwilio-sms<?php echo $moduleclass_sfx; ?>">
+  <form action="<?php echo JRoute::_('index.php'); ?>" method="post">
+    <div id="form-xttwiliosms-message" class="control-group">
+      <div class="controls">
+        <label for="xttwiliosms-message">
+            <?php echo JText::_('MOD_XTTWILIO_SMS_MESSAGE_LABEL'); ?></label>
+        <div class="controls">
+          <textarea id="xttwiliosms-message" name="message" placeholder="<?php
+            echo JText::_('MOD_XTTWILIO_SMS_MESSAGE_PLACEHOLDER'); ?>"></textarea>
+        </div>
+      </div>
+
+      <div class="controls">
+        <label for="xttwiliosms-phone">
+            <?php echo JText::_('MOD_XTTWILIO_SMS_PHONE_LABEL'); ?></label>
+        <div class="controls">
+          <input type="tel" id="xttwiliosms-phone" name="phone" placeholder="<?php
+            echo JText::_('MOD_XTTWILIO_SMS_PHONE_PLACEHOLDER'); ?>" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required />
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="controls">
+          <button type="submit" class="btn">
+            <?php echo JText::_('MOD_XTTWILIO_SMS_SEND_BUTTON'); ?></button>
+        </div>
+      </div>
+
+      <input type="hidden" name="option" value="com_ajax" />
+      <input type="hidden" name="plugin" value="xttwilio" />
+      <input type="hidden" name="format" value="raw" />
+      <input type="hidden" name="task" value="sendsms" />
+  </form>
+</div>

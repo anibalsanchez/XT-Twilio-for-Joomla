@@ -1,0 +1,14 @@
+<?php
+
+namespace tests\library\XTTwilio;
+
+// Library Initialization
+defined('_JEXEC') or define('_JEXEC', 1);
+
+define('TEST_ACCOUNT_SID', '..');
+define('TEST_AUTH_TOKEN', '..');
+define('TEST_TWILIO_PHONE_NUMBER', '.');
+define('TEST_USER_PHONE_NUMBER', '...');
+define('TEST_AGENT_PHONE_NUMBER', '...');
+
+require_once 'library/vendor/autoload.php';

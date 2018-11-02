@@ -12,8 +12,11 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory as CMSFactory;
 use Joomla\CMS\Plugin\CMSPlugin;
-use Twilio\Rest\Client as TwilioRest;
+use XTTwilio\Infrastructure\Service\Twilio\Click2CallHelper;
+use XTTwilio\Infrastructure\Service\Twilio\SMSHelper;
+use XTTwilio\Infrastructure\Service\Twilio\TwiMLResponseHelper;
 
 /**
  * XTTwilio plugin.
@@ -22,71 +25,48 @@ use Twilio\Rest\Client as TwilioRest;
  */
 class PlgAjaxXTTwilio extends CMSPlugin
 {
-    const CLICK2CALL_RESPONSE_OUTBOUND = <<<'XML'
-<?xml version="1.0" encoding="utf-8"?>
-<Response>
-    <Dial>
-        <Number url="onClic2CallScreenForMachine">
-            PHONE_NUMBER_FROM
-        </Number>
-    </Dial>
-    <Say>The call failed or the agent hung up. Goodbye.</Say>
-</Response>
-XML;
-
-    const CLICK2CALL_RESPONSE_SCREEN_FOR_MACHINE = <<<'XML'
-<?xml version="1.0" encoding="utf-8"?>
-<Response>
-    <Say>Connecting</Say>
-</Response>
-XML;
     protected $accountSid;
     protected $authToken;
-    protected $phoneNumberTo;
+    protected $phoneNumber;
 
     /**
-     * onAjaxSendSMS.
+     * onAjaxXTTwilio.
      */
-    public function onAjaxSendSMS()
+    public function onAjaxXTTwilio()
     {
         if (!$this->initialize()) {
             return false;
         }
 
-        $response = $this->sendSMS($phoneNumberFrom, $message);
+        $input = CMSFactory::getApplication()->input;
 
-        return json_encode($response);
-    }
+        $task = $input->get('task');
 
-    /**
-     * onAjaxClick2Call.
-     */
-    public function onAjaxClick2Call()
-    {
-        if (!$this->initialize()) {
-            return false;
+        switch ($task) {
+            case 'sendsms':
+                return $this->onAjaxSendSMS();
+
+                break;
+            case 'click2call':
+            return $this->onAjaxClick2Call();
+
+                break;
+            case 'getTwiMLResponseOutbound':
+                return $this->onGetTwiMLResponseOutbound();
+
+                break;
+            case 'getTwiMLResponseScreenForMachine':
+                return $this->getTwiMLResponseScreenForMachine();
+
+                break;
         }
-
-        $response = $this->click2Call($phoneNumberFrom);
-
-        return json_encode($response);
-    }
-
-    public function onClic2CallOutbound()
-    {
-        return self::CLICK2CALL_RESPONSE_OUTBOUND;
-    }
-
-    public function onClic2CallScreenForMachine()
-    {
-        return self::CLICK2CALL_RESPONSE_SCREEN_FOR_MACHINE;
     }
 
     protected function initialize()
     {
         $this->accountSid = $this->params->get('account_sid');
         $this->authToken = $this->params->get('auth_token');
-        $this->phoneNumberTo = $this->params->get('phone_number');
+        $this->phoneNumber = $this->params->get('phone_number');
 
         if (empty($this->accountSid)) {
             return false;
@@ -96,7 +76,7 @@ XML;
             return false;
         }
 
-        if (empty($this->phoneNumberTo)) {
+        if (empty($this->phoneNumber)) {
             return false;
         }
 
@@ -105,7 +85,10 @@ XML;
         return true;
     }
 
-    protected function sendSMS($phoneNumberFrom, $message)
+    /**
+     * onAjaxSendSMS.
+     */
+    protected function onAjaxSendSMS()
     {
         if (empty($phoneNumberFrom)) {
             return false;
@@ -115,13 +98,15 @@ XML;
             return false;
         }
 
-        $client = new TwilioRest($this->accountSid, $this->authToken);
-        $response = $client->messages->create($this->phoneNumberTo, ['from' => $phoneNumberFrom, 'body' => $message]);
+        $smsHelper = SMSHelper::create($this->accountSid, $this->authToken, $this->phoneNumber);
 
-        return $response;
+        return $smsHelper->sendSms($phoneNumberFrom, $message);
     }
 
-    protected function click2Call($phoneNumberFrom)
+    /**
+     * onAjaxClick2Call.
+     */
+    protected function onAjaxClick2Call()
     {
         if (empty($phoneNumberFrom)) {
             return false;
@@ -131,9 +116,27 @@ XML;
             return false;
         }
 
-        $client = new TwilioRest($this->accountSid, $this->authToken);
-        $response = $client->calls->create($phoneNumberTo, $phoneNumberFrom);
+        $smsHelper = Click2CallHelper::create($this->accountSid, $this->authToken, $this->phoneNumber);
 
-        return $response;
+        return $smsHelper->call($phoneNumberTo);
+    }
+
+    /**
+     * onGetTwiMLResponseOutbound.
+     */
+    protected function onGetTwiMLResponseOutbound()
+    {
+        $screenForMachineResponseUrl = 'http...';
+        $agentPhoneNumber = 999;
+
+        return TwiMLResponseHelper::create()->getOutboundResponse($screenForMachineResponseUrl, $agentPhoneNumber);
+    }
+
+    /**
+     * getTwiMLResponseScreenForMachine.
+     */
+    protected function getTwiMLResponseScreenForMachine()
+    {
+        return TwiMLResponseHelper::create()->getScreenForMachineResponse();
     }
 }
