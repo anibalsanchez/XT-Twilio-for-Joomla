@@ -57,3 +57,4 @@ tslint.json
 /var/
 
 notes
+/tests/bootstrap.php
