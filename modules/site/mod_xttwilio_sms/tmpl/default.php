@@ -10,6 +10,10 @@ defined('_JEXEC') or die;
 
 $moduleclass_sfx .= ' '.'mod_xttwilio_sms'.$module->id;
 
+use Joomla\CMS\HTML\HTMLHelper as CMSHTMLHelper;
+
+CMSHTMLHelper::script('mod_xttwilio_sms/mod_xttwilio_sms.js', ['relative' => true], ['defer' => true]);
+
 ?>
 <div class="xttwilio-sms<?php echo $moduleclass_sfx; ?>">
   <form action="<?php echo JRoute::_('index.php'); ?>" method="post">
@@ -34,7 +38,7 @@ $moduleclass_sfx .= ' '.'mod_xttwilio_sms'.$module->id;
 
       <div class="control-group">
         <div class="controls">
-          <button type="submit" class="btn">
+          <button id="xttwiliosms-button" type="submit" class="btn">
             <?php echo JText::_('MOD_XTTWILIO_SMS_SEND_BUTTON'); ?></button>
         </div>
       </div>

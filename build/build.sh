@@ -1,7 +1,7 @@
 #!/bin/sh
 
-test -d app/ && npm run production --prefix app/
-test -d app/ && cp app/dist/* library/media/app/dist/
+npx babel modules/site/mod_xttwilio_sms/media/js/mod_xttwilio_sms.js --presets=es2015 | \
+  uglifyjs --compress --mangle > modules/site/mod_xttwilio_sms/media/js/mod_xttwilio_sms.min.js
 
 ## npm ci
 npm run build
