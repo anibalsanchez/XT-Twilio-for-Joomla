@@ -19,6 +19,10 @@ class SMSHelper
 {
     use CreatorTrait;
 
+    const PARAM_PHONE_NUMBER_FROM = 'phone-number-from';
+
+    const PARAM_MESSAGE = 'message';
+
     protected $accountSid;
 
     protected $authToken;
@@ -44,9 +48,10 @@ class SMSHelper
 
         $client = new TwilioRest($this->accountSid, $this->authToken);
         $response = $client->messages->create(
-            $phoneNumberTo, [
+            $phoneNumberTo,
+            [
                 'from' => $this->phoneNumber,
-                'body' => $message . ' - ' . $phoneNumberTo
+                'body' => $message.' - '.$phoneNumberTo,
             ]
         );
 

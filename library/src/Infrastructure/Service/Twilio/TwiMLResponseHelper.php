@@ -13,11 +13,15 @@
 namespace XTTwilio\Infrastructure\Service\Twilio;
 
 use Extly\Infrastructure\Creator\CreatorTrait;
-use Twilio\Rest\Client as TwilioRest;
+use Joomla\CMS\Uri\Uri as CMSUri;
 
 class TwiMLResponseHelper
 {
     use CreatorTrait;
+
+    const PARAM_SCREEN_FOR_MACHINE_RESPONSE_URL = 'screen-for-machine-response-url';
+
+    const PARAM_AGENT_PHONE_NUMBER_FROM = 'agent-phone-number-from';
 
     const CLICK2CALL_RESPONSE_OUTBOUND = <<<'XML'
 <?xml version="1.0" encoding="utf-8"?>
@@ -38,10 +42,10 @@ XML;
 </Response>
 XML;
 
-    public function getOutboundResponse($screenForMachineResponseUrl, $agentPhoneNumber)
+    public function getOutboundResponse($agentPhoneNumber)
     {
         $buffer = self::CLICK2CALL_RESPONSE_OUTBOUND;
-        $buffer = str_replace('SCREEN_FOR_MACHINE_RESPONSE_URL', $screenForMachineResponseUrl, $buffer);
+        $buffer = str_replace('SCREEN_FOR_MACHINE_RESPONSE_URL', $this->getTwiMLResponseScreenForMachineUrl(), $buffer);
         $buffer = str_replace('AGENT_PHONE_NUMBER_FROM', $agentPhoneNumber, $buffer);
 
         return $buffer;
@@ -50,5 +54,11 @@ XML;
     public function getScreenForMachineResponse()
     {
         return self::CLICK2CALL_RESPONSE_SCREEN_FOR_MACHINE;
+    }
+
+    public function getTwiMLResponseScreenForMachineUrl($rootUri = null)
+    {
+        return ($rootUri ? $rootUri : CMSUri::root()).
+            'index.php?option=com_ajax&plugin=xttwilio&task=getTwiMLResponseScreenForMachine&format=raw';
     }
 }

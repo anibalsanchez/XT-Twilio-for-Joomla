@@ -11,4 +11,6 @@ define('TEST_TWILIO_PHONE_NUMBER', '.');
 define('TEST_USER_PHONE_NUMBER', '...');
 define('TEST_AGENT_PHONE_NUMBER', '...');
 
+define('J_URI_ROOT', 'http://localhost:8080/');
+
 require_once 'library/vendor/autoload.php';

@@ -19,6 +19,8 @@ class Click2CallHelper
 {
     use CreatorTrait;
 
+    const PARAM_PHONE_NUMBER_TO = 'phone-number-to';
+
     protected $accountSid;
 
     protected $authToken;

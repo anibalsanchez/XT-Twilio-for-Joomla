@@ -8,7 +8,8 @@
     },
     "require": {
         "twilio/sdk": "^5.24",
-        "anibalsanchez/create-pattern": "^2.0"
+        "anibalsanchez/create-pattern": "^2.0",
+        "php-http/client-common": "^1.8"
     },
     "require-dev": {
         "php-http/curl-client": "^1.7",
