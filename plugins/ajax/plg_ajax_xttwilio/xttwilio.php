@@ -29,6 +29,7 @@ class PlgAjaxXTTwilio extends CMSPlugin
     protected $accountSid;
     protected $authToken;
     protected $phoneNumber;
+    protected $agentPhoneNumber;
 
     /**
      * onAjaxXTTwilio.
@@ -53,9 +54,6 @@ class PlgAjaxXTTwilio extends CMSPlugin
             case 'getTwiMLResponseOutbound':
                 return $this->onGetTwiMLResponseOutbound();
                 break;
-            case 'getTwiMLResponseScreenForMachine':
-                return $this->getTwiMLResponseScreenForMachine();
-                break;
         }
     }
 
@@ -64,6 +62,7 @@ class PlgAjaxXTTwilio extends CMSPlugin
         $this->accountSid = $this->params->get('account_sid');
         $this->authToken = $this->params->get('auth_token');
         $this->phoneNumber = $this->params->get('phone_number');
+        $this->agentPhoneNumber = $this->params->get('agent_phone_number');
 
         if (empty($this->accountSid)) {
             return false;
@@ -111,13 +110,13 @@ class PlgAjaxXTTwilio extends CMSPlugin
     protected function onAjaxClick2Call()
     {
         $input = new CMSInput();
-        $phoneNumberTo = $input->get(SMSHelper::PARAM_PHONE_NUMBER_TO);
+        $phoneNumberTo = $input->get(Click2CallHelper::PARAM_PHONE_NUMBER_TO);
 
         if (empty($phoneNumberTo)) {
             return $this->generateResponse(false, 'Error: Invalid Phone Number To');
         }
 
-        $result = Click2CallHelper::create($this->accountSid, $this->authToken, $this->phoneNumber)
+        $result = Click2CallHelper::create($this->accountSid, $this->authToken, $this->phoneNumber, JUri::root())
             ->call($phoneNumberTo);
 
         return $this->generateResponse(true, $result->sid);
@@ -128,18 +127,7 @@ class PlgAjaxXTTwilio extends CMSPlugin
      */
     protected function onGetTwiMLResponseOutbound()
     {
-        $input = new CMSInput();
-        $agentPhoneNumber = $input->get(TwiMLResponseHelper::PARAM_AGENT_PHONE_NUMBER_FROM);
-
-        return TwiMLResponseHelper::create()->getOutboundResponse($agentPhoneNumber);
-    }
-
-    /**
-     * getTwiMLResponseScreenForMachine.
-     */
-    protected function getTwiMLResponseScreenForMachine()
-    {
-        return TwiMLResponseHelper::create()->getScreenForMachineResponse();
+        return TwiMLResponseHelper::create()->getOutboundResponse($this->agentPhoneNumber);
     }
 
     protected function generateResponse($status, $message)

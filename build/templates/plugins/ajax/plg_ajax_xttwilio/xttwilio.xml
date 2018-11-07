@@ -25,6 +25,7 @@
         <field name="account_sid" type="text" label="PLG_AJAX_XTTWILIO_CLICK2CALL_ACCOUNT_SID_LABEL" description="PLG_AJAX_XTTWILIO_CLICK2CALL_ACCOUNT_SID_DESCRIPTION"/>
         <field name="auth_token" type="text" label="PLG_AJAX_XTTWILIO_CLICK2CALL_AUTH_TOKEN_LABEL" description="PLG_AJAX_XTTWILIO_CLICK2CALL_AUTH_TOKEN_DESCRIPTION"/>
         <field name="phone_number" type="text" label="PLG_AJAX_XTTWILIO_CLICK2CALL_PHONE_NUMBER_LABEL" description="PLG_AJAX_XTTWILIO_CLICK2CALL_PHONE_NUMBER_DESCRIPTION"/>
+        <field name="agent_phone_number" type="text" label="PLG_AJAX_XTTWILIO_CLICK2CALL_AGENT_PHONE_NUMBER_LABEL" description="PLG_AJAX_XTTWILIO_CLICK2CALL_AGENT_PHONE_NUMBER_DESCRIPTION"/>
       </fieldset>
     </fields>
   </config>

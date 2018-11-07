@@ -18,7 +18,6 @@ use Http\Discovery\MessageFactoryDiscovery;
 use PHPUnit\Framework\TestCase;
 use XTTwilio\Infrastructure\Service\Twilio\Click2CallHelper;
 use XTTwilio\Infrastructure\Service\Twilio\SMSHelper;
-use XTTwilio\Infrastructure\Service\Twilio\TwiMLResponseHelper;
 
 /**
  * @coversNothing
@@ -48,7 +47,7 @@ class PlgAjaxXTTwilioTest extends TestCase
 
     public function testComAjaxClick2Call()
     {
-        $response = $this->get(
+        $response = $this->post(
             J_URI_ROOT.'index.php?option=com_ajax&plugin=xttwilio&task=click2call&format=json',
             [
                 Click2CallHelper::PARAM_PHONE_NUMBER_TO => TEST_USER_PHONE_NUMBER,
@@ -56,36 +55,26 @@ class PlgAjaxXTTwilioTest extends TestCase
         );
         $httpStatusCode = $response->getStatusCode();
         $content = (string) $response->getBody();
+        $packet = json_decode($content);
 
         $this->assertSame(200, $httpStatusCode);
-        $this->assertContains('url="'.J_URI_ROOT, $content);
-        $this->assertContains(TEST_AGENT_PHONE_NUMBER, $content);
-        $this->assertContains('<Say>The call failed or the agent hung up. Goodbye.</Say>', $content);
-    }
+        $this->assertTrue($packet->success);
 
-    public function testComAjaxGetTwiMLResponseScreenForMachine()
-    {
-        $url = TwiMLResponseHelper::create()->getTwiMLResponseScreenForMachineUrl(J_URI_ROOT);
-        $response = $this->get($url);
-        $httpStatusCode = $response->getStatusCode();
-        $content = (string) $response->getBody();
-
-        $this->assertSame(200, $httpStatusCode);
-        $this->assertContains('<Say>Connecting</Say>', $content);
+        $data = array_shift($packet->data);
+        $this->assertTrue($data->status);
     }
 
     public function testComAjaxGetTwiMLResponseOutbound()
     {
-        $response = $this->get(J_URI_ROOT.
-            'index.php?option=com_ajax&plugin=xttwilio&task=getTwiMLResponseOutbound&format=raw'.
-            '&'.TwiMLResponseHelper::PARAM_AGENT_PHONE_NUMBER_FROM.'='.TEST_AGENT_PHONE_NUMBER);
+        $url = J_URI_ROOT.'index.php?option=com_ajax&plugin=xttwilio&task=getTwiMLResponseOutbound&format=raw';
+
+        $response = $this->post($url);
         $httpStatusCode = $response->getStatusCode();
         $content = (string) $response->getBody();
 
         $this->assertSame(200, $httpStatusCode);
-        $this->assertContains('url="'.J_URI_ROOT, $content);
         $this->assertContains(TEST_AGENT_PHONE_NUMBER, $content);
-        $this->assertContains('<Say>The call failed or the agent hung up. Goodbye.</Say>', $content);
+        $this->assertContains('Thanks for contacting our sales department. Our next available representative will take your call.', $content);
     }
 
     protected function get($url)
@@ -98,14 +87,18 @@ class PlgAjaxXTTwilioTest extends TestCase
         return $client->get((string) $url);
     }
 
-    protected function post($url, $fields)
+    protected function post($url, $fields = null)
     {
+        $content = null;
+
         $client = new HttpMethodsClient(
             HttpClientDiscovery::find(),
             MessageFactoryDiscovery::find()
         );
 
-        $content = http_build_query($fields);
+        if ($fields) {
+            $content = http_build_query($fields);
+        }
 
         return $client->post((string) $url, [], $content);
     }

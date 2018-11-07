@@ -27,7 +27,9 @@ class Click2CallHelper
 
     protected $phoneNumberFrom;
 
-    public function __construct($accountSid, $authToken, $phoneNumberFrom)
+    protected $rootUri;
+
+    public function __construct($accountSid, $authToken, $phoneNumberFrom, $rootUri)
     {
         $this->accountSid = $accountSid;
         $this->authToken = $authToken;
@@ -45,7 +47,7 @@ class Click2CallHelper
             $phoneNumberTo,
             $this->phoneNumberFrom,
             [
-                'url' => 'https://handler.twilio.com/twiml/EHeecdc2f2a157e3e98b44bac32178a9c6',
+                'url' => $rootUri.'index.php?option=com_ajax&plugin=xttwilio&task=getTwiMLResponseOutbound&format=raw',
             ]
         );
 
