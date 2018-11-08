@@ -10,34 +10,29 @@
 
 /* global URLSearchParams, alert */
 
-document.addEventListener('DOMContentLoaded', function() {
-  const postData = (phone, message) => {
+document.addEventListener('DOMContentLoaded', function () {
+  const postData = (phone) => {
     const data = new URLSearchParams();
-    data.append('phone-number-from', phone);
-    data.append('message', message);
+    data.append('phone-number-to', phone);
 
-    return fetch('index.php?option=com_ajax&plugin=xttwilio&task=sendsms&format=json', {
+    return fetch('index.php?option=com_ajax&plugin=xttwilio&task=click2call&format=json', {
       body: data,
       method: 'POST',
     });
   };
 
-  const eventHandler = (e, message, phone) => {
+  const eventHandler = (e, phone) => {
     e.preventDefault();
-
-    if (!message.value.length) {
-      return;
-    }
 
     if (!phone.value.length) {
       return;
     }
 
-    postData(phone.value, message.value)
+    postData(phone.value)
       .then(response => response.json())
       .then((response) => {
         if (response.success) {
-          alert('Message sent.');
+          alert('The call is in progress.');
 
           return;
         }
@@ -48,9 +43,8 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   };
 
-  const message = document.getElementById('xttwiliosms-message');
-  const phone = document.getElementById('xttwiliosms-phone');
-  const button = document.getElementById('xttwiliosms-button');
+  const phone = document.getElementById('xttwilioclick2call-phone');
+  const button = document.getElementById('xttwilioclick2call-button');
 
-  button.addEventListener('click', e => eventHandler(e, message, phone));
+  button.addEventListener('click', e => eventHandler(e, phone));
 });

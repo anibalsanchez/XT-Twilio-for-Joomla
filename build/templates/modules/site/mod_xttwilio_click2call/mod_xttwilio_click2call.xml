@@ -16,6 +16,10 @@
     <language tag="en-GB">language/en-GB/en-GB.mod_[EXTENSION_ALIAS]_click2call.ini</language>
     <language tag="en-GB">language/en-GB/en-GB.mod_[EXTENSION_ALIAS]_click2call.sys.ini</language>
   </languages>
+  <!-- Media files -->
+  <media destination="mod_[EXTENSION_ALIAS]_click2call" folder="media">
+    <folder>js</folder>
+  </media>
   <config>
     <fields name="params">
       <fieldset name="basic">

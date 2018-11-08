@@ -34,6 +34,7 @@ class Click2CallHelper
         $this->accountSid = $accountSid;
         $this->authToken = $authToken;
         $this->phoneNumberFrom = $phoneNumberFrom;
+        $this->rootUri = $rootUri;
     }
 
     public function call($phoneNumberTo)
@@ -47,7 +48,8 @@ class Click2CallHelper
             $phoneNumberTo,
             $this->phoneNumberFrom,
             [
-                'url' => $rootUri.'index.php?option=com_ajax&plugin=xttwilio&task=getTwiMLResponseOutbound&format=raw',
+                'url' => $this->rootUri.
+                    'index.php?option=com_ajax&plugin=xttwilio&task=getTwiMLResponseOutbound&format=raw',
             ]
         );
 

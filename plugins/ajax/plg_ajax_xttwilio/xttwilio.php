@@ -91,17 +91,17 @@ class PlgAjaxXTTwilio extends CMSPlugin
         $message = $input->getString(SMSHelper::PARAM_MESSAGE);
 
         if (empty($phoneNumberFrom)) {
-            return $this->generateResponse(false, 'Error: Invalid Phone Number From');
+            throw new Exception('Error: Invalid Phone Number From');
         }
 
         if (empty($message)) {
-            return $this->generateResponse(false, 'Error: Invalid Phone Number Message');
+            throw new Exception('Error: Invalid Phone Number Message');
         }
 
         $result = SMSHelper::create($this->accountSid, $this->authToken, $this->phoneNumber)
             ->sendSms($phoneNumberFrom, $message);
 
-        return $this->generateResponse(true, $result->sid);
+        return $result->sid;
     }
 
     /**
@@ -113,13 +113,13 @@ class PlgAjaxXTTwilio extends CMSPlugin
         $phoneNumberTo = $input->get(Click2CallHelper::PARAM_PHONE_NUMBER_TO);
 
         if (empty($phoneNumberTo)) {
-            return $this->generateResponse(false, 'Error: Invalid Phone Number To');
+            throw new Exception('Error: Invalid Phone Number To');
         }
 
         $result = Click2CallHelper::create($this->accountSid, $this->authToken, $this->phoneNumber, JUri::root())
             ->call($phoneNumberTo);
 
-        return $this->generateResponse(true, $result->sid);
+        return $result->sid;
     }
 
     /**
@@ -128,13 +128,5 @@ class PlgAjaxXTTwilio extends CMSPlugin
     protected function onGetTwiMLResponseOutbound()
     {
         return TwiMLResponseHelper::create()->getOutboundResponse($this->agentPhoneNumber);
-    }
-
-    protected function generateResponse($status, $message)
-    {
-        return (object) [
-            'status' => $status,
-            'message' => $message,
-        ];
     }
 }

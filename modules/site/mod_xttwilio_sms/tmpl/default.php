@@ -12,7 +12,7 @@ $moduleclass_sfx .= ' '.'mod_xttwilio_sms'.$module->id;
 
 use Joomla\CMS\HTML\HTMLHelper as CMSHTMLHelper;
 
-CMSHTMLHelper::script('mod_xttwilio_sms/mod_xttwilio_sms.js', ['relative' => true], ['defer' => true]);
+CMSHTMLHelper::script('mod_xttwilio_sms/mod_xttwilio_sms.min.js', ['relative' => true], ['defer' => true]);
 
 ?>
 <div class="xttwilio-sms<?php echo $moduleclass_sfx; ?>">
@@ -32,7 +32,7 @@ CMSHTMLHelper::script('mod_xttwilio_sms/mod_xttwilio_sms.js', ['relative' => tru
             <?php echo JText::_('MOD_XTTWILIO_SMS_PHONE_LABEL'); ?></label>
         <div class="controls">
           <input type="tel" id="xttwiliosms-phone" name="phone" placeholder="<?php
-            echo JText::_('MOD_XTTWILIO_SMS_PHONE_PLACEHOLDER'); ?>" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required />
+            echo JText::_('MOD_XTTWILIO_SMS_PHONE_PLACEHOLDER'); ?>" pattern="\+?[0-9]+" required />
         </div>
       </div>
 
