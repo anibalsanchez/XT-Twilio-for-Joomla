@@ -28,6 +28,16 @@ CMSHTMLHelper::script('mod_xttwilio_sms/mod_xttwilio_sms.min.js', ['relative' =>
       </div>
 
       <div class="controls">
+        <label for="xttwiliosms-firstname">
+            <?php echo JText::_('MOD_XTTWILIO_SMS_FIRSTNAME_LABEL'); ?></label>
+        <div class="controls">
+          <input type="tel" id="xttwiliosms-firstname" name="firstname" placeholder="<?php
+            echo JText::_('MOD_XTTWILIO_SMS_FIRSTNAME_PLACEHOLDER'); ?>"
+                required />
+        </div>
+      </div>
+
+      <div class="controls">
         <label for="xttwiliosms-phone">
             <?php echo JText::_('MOD_XTTWILIO_SMS_PHONE_LABEL'); ?></label>
         <div class="controls">

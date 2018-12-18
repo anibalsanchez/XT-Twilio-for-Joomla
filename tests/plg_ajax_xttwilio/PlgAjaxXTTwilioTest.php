@@ -30,8 +30,9 @@ class PlgAjaxXTTwilioTest extends TestCase
             J_URI_ROOT.
             'index.php?option=com_ajax&plugin=xttwilio&task=sendsms&format=json',
             [
-                SMSHelper::PARAM_PHONE_NUMBER_FROM => TEST_USER_PHONE_NUMBER,
                 SMSHelper::PARAM_MESSAGE => 'Test PlgAjaxXTTwilioTest/testComAjaxSendSMS: '.rand(0, 999),
+                SMSHelper::PARAM_FIRST_NAME => TEST_FIRST_NAME,
+                SMSHelper::PARAM_PHONE_NUMBER_FROM => TEST_USER_PHONE_NUMBER,
             ]
         );
         $httpStatusCode = $response->getStatusCode();

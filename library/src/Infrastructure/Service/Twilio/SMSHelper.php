@@ -19,9 +19,11 @@ class SMSHelper
 {
     use CreatorTrait;
 
-    const PARAM_PHONE_NUMBER_FROM = 'phone-number-from';
-
     const PARAM_MESSAGE = 'message';
+
+    const PARAM_FIRST_NAME = 'first-name';
+
+    const PARAM_PHONE_NUMBER_FROM = 'phone-number-from';
 
     protected $accountSid;
 
@@ -36,13 +38,17 @@ class SMSHelper
         $this->phoneNumber = $phoneNumber;
     }
 
-    public function sendSms($phoneNumberTo, $message)
+    public function sendSms($message, $firstName, $phoneNumberTo)
     {
-        if (empty($phoneNumberTo)) {
+        if (empty($message)) {
             return false;
         }
 
-        if (empty($message)) {
+        if (empty($firstName)) {
+            return false;
+        }
+
+        if (empty($phoneNumberTo)) {
             return false;
         }
 
@@ -51,7 +57,7 @@ class SMSHelper
             $phoneNumberTo,
             [
                 'from' => $this->phoneNumber,
-                'body' => $message.' - '.$phoneNumberTo,
+                'body' => $message.' - '.$firstName.' ( '.$phoneNumberTo.' )',
             ]
         );
 

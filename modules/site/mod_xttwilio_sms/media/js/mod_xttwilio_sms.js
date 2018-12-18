@@ -11,10 +11,11 @@
 /* global URLSearchParams, alert */
 
 document.addEventListener('DOMContentLoaded', function() {
-  const postData = (phone, message) => {
+  const postData = (firstname, phone, message) => {
     const data = new URLSearchParams();
-    data.append('phone-number-from', phone);
     data.append('message', message);
+    data.append('first-name', firstname);
+    data.append('phone-number-from', phone);
 
     return fetch('index.php?option=com_ajax&plugin=xttwilio&task=sendsms&format=json', {
       body: data,
@@ -22,10 +23,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   };
 
-  const eventHandler = (e, message, phone) => {
+  const eventHandler = (e, message, firstname, phone) => {
     e.preventDefault();
 
     if (!message.value.length) {
+      return;
+    }
+
+    if (!firstname.value.length) {
       return;
     }
 
@@ -33,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
-    postData(phone.value, message.value)
+    postData(firstname.value, phone.value, message.value)
       .then(response => response.json())
       .then((response) => {
         if (response.success) {
@@ -49,8 +54,9 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   const message = document.getElementById('xttwiliosms-message');
+  const firstname = document.getElementById('xttwiliosms-firstname');
   const phone = document.getElementById('xttwiliosms-phone');
   const button = document.getElementById('xttwiliosms-button');
 
-  button.addEventListener('click', e => eventHandler(e, message, phone));
+  button.addEventListener('click', e => eventHandler(e, message, firstname, phone));
 });

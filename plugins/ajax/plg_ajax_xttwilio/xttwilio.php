@@ -87,19 +87,25 @@ class PlgAjaxXTTwilio extends CMSPlugin
     protected function onAjaxSendSMS()
     {
         $input = new CMSInput();
-        $phoneNumberFrom = $input->getCmd(SMSHelper::PARAM_PHONE_NUMBER_FROM);
-        $message = $input->getString(SMSHelper::PARAM_MESSAGE);
 
-        if (empty($phoneNumberFrom)) {
-            throw new Exception('Error: Invalid Phone Number From');
-        }
+        $message = $input->getString(SMSHelper::PARAM_MESSAGE);
+        $firstName = $input->getCmd(SMSHelper::PARAM_FIRST_NAME);
+        $phoneNumberFrom = $input->getCmd(SMSHelper::PARAM_PHONE_NUMBER_FROM);
 
         if (empty($message)) {
             throw new Exception('Error: Invalid Phone Number Message');
         }
 
+        if (empty($firstName)) {
+            throw new Exception('Error: Invalid First Name');
+        }
+
+        if (empty($phoneNumberFrom)) {
+            throw new Exception('Error: Invalid Phone Number From');
+        }
+
         $result = SMSHelper::create($this->accountSid, $this->authToken, $this->phoneNumber)
-            ->sendSms($phoneNumberFrom, $message);
+            ->sendSms($message, $firstName, $phoneNumberFrom);
 
         return $result->sid;
     }
