@@ -12,9 +12,9 @@
 [EXTENSION_DESC]
   ]]>
   </description>
-	<!-- <media destination="lib_[EXTENSION_ALIAS]" folder="media">
-		<folder>app</folder>
-	</media> -->
+	<media destination="lib_[EXTENSION_ALIAS]" folder="media">
+		<folder>intl-tel-input</folder>
+	</media>
   <files>
     <folder>src</folder>
     <folder>vendor</folder>

@@ -2,8 +2,8 @@
 <extension method="upgrade" type="library" version="1.0">
   <name>XT Twilio for Joomla - Library</name>
   <libraryname>xttwilio</libraryname>
-  <version>1.1.0</version>
-  <creationDate>2018-12-18</creationDate>
+  <version>1.2.0</version>
+  <creationDate>2018-12-27</creationDate>
 
 	<author>Extly, CB</author>
 	<authorEmail>team@extly.com</authorEmail>
@@ -16,9 +16,9 @@
 A solution to call your clients for Joomla, via SMS, Voice or video channels.
   ]]>
   </description>
-	<!-- <media destination="lib_xttwilio" folder="media">
-		<folder>app</folder>
-	</media> -->
+	<media destination="lib_xttwilio" folder="media">
+		<folder>intl-tel-input</folder>
+	</media>
   <files>
     <folder>src</folder>
     <folder>vendor</folder>

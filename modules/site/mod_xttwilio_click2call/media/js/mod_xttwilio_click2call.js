@@ -21,14 +21,16 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   };
 
-  const eventHandler = (e, phone) => {
+  const eventHandler = (e, phone, intlTelInputControl) => {
     e.preventDefault();
 
-    if (!phone.value.length) {
+    if ((!phone.value.length) || (!intlTelInputControl.isValidNumber())) {
       return;
     }
 
-    postData(phone.value)
+    const intlTelNumber = intlTelInputControl.getNumber(intlTelInputUtils.numberFormat.E164);
+
+    postData(intlTelNumber)
       .then(response => response.json())
       .then((response) => {
         if (response.success) {
@@ -43,8 +45,27 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   };
 
+  const updateStateHandler = (e, phone, intlTelInputControl) => {
+    const state = intlTelInputControl.isValidNumber();
+
+    if (state) {
+      phone.classList.remove('invalid');
+      phone.classList.add('valid');
+    } else {
+      phone.classList.remove('valid');
+      phone.classList.add('invalid');
+    }
+  };
+
   const phone = document.getElementById('xttwilioclick2call-phone');
   const button = document.getElementById('xttwilioclick2call-button');
 
-  button.addEventListener('click', e => eventHandler(e, phone));
+  // https://github.com/jackocnr/intl-tel-input - International Telephone Input
+  const intlTelInputControl = window.intlTelInput(phone, {
+    utilsScript: 'media/lib_xttwilio/intl-tel-input/js/utils.js'
+  });
+
+  phone.addEventListener("countrychange", phone, e => updateStateHandler(e, phone, intlTelInputControl));
+  phone.addEventListener("keyup", e => updateStateHandler(e, phone, intlTelInputControl));
+  button.addEventListener('click', e => eventHandler(e, phone, intlTelInputControl));
 });

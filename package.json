@@ -1,6 +1,6 @@
 {
   "name": "xt-twilio-for-joomla",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A solution to call your clients for Joomla, via SMS, Voice or video channels.",
   "main": "webpack.config.js",
   "scripts": {
