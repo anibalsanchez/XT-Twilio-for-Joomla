@@ -11,9 +11,13 @@
  */
 
 use Joomla\CMS\Helper\ModuleHelper;
+use Joomla\CMS\HTML\HTMLHelper as CMSHTMLHelper;
 
 defined('_JEXEC') or die;
 
 $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
+
+CMSHTMLHelper::stylesheet('lib_xttwilio/intl-tel-input/intlTelInput.min.css', ['version' => 'auto', 'relative' => true]);
+CMSHTMLHelper::script('lib_xttwilio/intl-tel-input/intlTelInput.min.js', ['relative' => true], ['defer' => true]);
 
 require ModuleHelper::getLayoutPath('mod_xttwilio_sms', $params->get('layout', 'default'));

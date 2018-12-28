@@ -8,7 +8,7 @@
  * @see         https://www.extly.com
  */
 
-/* global URLSearchParams, alert */
+/* global URLSearchParams, alert, intlTelInputUtils */
 
 document.addEventListener('DOMContentLoaded', function () {
   const postData = (phone) => {
@@ -62,10 +62,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // https://github.com/jackocnr/intl-tel-input - International Telephone Input
   const intlTelInputControl = window.intlTelInput(phone, {
-    utilsScript: 'media/lib_xttwilio/intl-tel-input/js/utils.js'
+    utilsScript: 'media/lib_xttwilio/intl-tel-input/js/utils.js',
   });
 
   phone.addEventListener("countrychange", phone, e => updateStateHandler(e, phone, intlTelInputControl));
+  phone.addEventListener("open:countrydropdown", phone, e => updateStateHandler(e, phone, intlTelInputControl));
+  phone.addEventListener("close:countrydropdown", phone, e => updateStateHandler(e, phone, intlTelInputControl));
+  phone.addEventListener("focus", phone, e => updateStateHandler(e, phone, intlTelInputControl));
   phone.addEventListener("keyup", e => updateStateHandler(e, phone, intlTelInputControl));
   button.addEventListener('click', e => eventHandler(e, phone, intlTelInputControl));
 });
