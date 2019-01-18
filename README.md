@@ -12,6 +12,7 @@ The full list of releases can be found here: https://github.com/anibalsanchez/XT
 The source code repository can be found here: https://github.com/anibalsanchez/XT-Twilio-for-Joomla
 
 ## Add a Click To Call Button & SMS Chat to Your Joomla Site
+
 From Twilio's Blog: **Add a Click To Call Button & SMS Chat to Your Joomla Site**
 
 As a Joomla community volunteer, I am always looking for opportunities to help my favorite CMS grow and add new features. Following these ideas, Twilio and Joomla are a perfect match to bring the possibilities of a first-level communication platform to small and medium-size organizations. In this blog post, I am going to create the required extensions for Joomla to incorporate a simple communication channel to a website by creating a click to call button.
