@@ -13,6 +13,7 @@
 namespace XTTwilio\Infrastructure\Service\Twilio;
 
 use Extly\Infrastructure\Creator\CreatorTrait;
+use Twilio\Rest\Client as TwilioRest;
 
 class TwilioHelperAbstract
 {

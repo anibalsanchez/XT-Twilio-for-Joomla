@@ -22,8 +22,7 @@ class LookupHelperTest extends TestCase
 {
     public function testRetrieve()
     {
-        $lookupHelper = LookupHelper::create(TEST_ACCOUNT_SID, TEST_AUTH_TOKEN);
-        $phoneNumberInformation = $lookupHelper->retrieve(TEST_USER_PHONE_NUMBER);
+        $phoneNumberInformation = LookupHelper::create(TEST_ACCOUNT_SID, TEST_AUTH_TOKEN)->retrieve(TEST_USER_PHONE_NUMBER);
 
         $this->assertSame('US', $phoneNumberInformation->countryCode);
         $this->assertSame('(510) 867-5310', $phoneNumberInformation->nationalFormat);

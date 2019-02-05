@@ -16,12 +16,15 @@ class TaskRouterHelper extends TwilioHelperAbstract
 {
     public function createsTask($workspace, $task = [])
     {
-        if (empty($phoneNumber)) {
-            return false;
-        }
-
         return $this->getClient()->taskrouter->v1->workspaces($workspace)
             ->tasks
             ->create($task);
+    }
+
+    public function retrieveTask($workspace, $taskSid)
+    {
+        return $this->getClient()->taskrouter->v1->workspaces($workspace)
+            ->tasks($taskSid)
+            ->fetch();
     }
 }
