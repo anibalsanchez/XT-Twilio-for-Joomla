@@ -23,7 +23,7 @@ class TaskRouterHelperTest extends TestCase
     public function testCreatesTask()
     {
         $task = TaskRouterHelper::create(TEST_ACCOUNT_SID, TEST_AUTH_TOKEN)
-            ->createsTask(TEST_FLEX_WORKSPACE, [
+            ->createsTask(TEST_FLEX_WORKSPACE_SID, [
                 'attributes' => '{
                     "glossary": {
                         "title": "example glossary",
@@ -53,7 +53,7 @@ class TaskRouterHelperTest extends TestCase
         $this->assertStringStartsWith('pending', $task->assignmentStatus);
 
         $task = TaskRouterHelper::create(TEST_ACCOUNT_SID, TEST_AUTH_TOKEN)
-            ->retrieveTask(TEST_FLEX_WORKSPACE, $task->sid);
+            ->retrieveTask(TEST_FLEX_WORKSPACE_SID, $task->sid);
 
         $this->assertStringStartsWith('WT', $task->sid);
         $attributes = json_decode($task->attributes);

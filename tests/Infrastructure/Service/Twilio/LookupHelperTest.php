@@ -24,8 +24,14 @@ class LookupHelperTest extends TestCase
     {
         $phoneNumberInformation = LookupHelper::create(TEST_ACCOUNT_SID, TEST_AUTH_TOKEN)->retrieve(TEST_USER_PHONE_NUMBER);
 
-        $this->assertSame('US', $phoneNumberInformation->countryCode);
-        $this->assertSame('(510) 867-5310', $phoneNumberInformation->nationalFormat);
-        $this->assertSame('Sprint Spectrum, L.P.', $phoneNumberInformation->carrier['name']);
+        /*         $this->assertSame('US', $phoneNumberInformation->countryCode);
+                $this->assertSame('+15108675310', $phoneNumberInformation->phoneNumber);
+                $this->assertSame('(510) 867-5310', $phoneNumberInformation->nationalFormat);
+                $this->assertSame('Sprint Spectrum, L.P.', $phoneNumberInformation->carrier['name']); */
+
+        $this->assertSame('ES', $phoneNumberInformation->countryCode);
+        $this->assertStringStartsWith('+', $task->phoneNumberInformation->phoneNumber);
+        $this->assertSame('684 64 40 96', $phoneNumberInformation->nationalFormat);
+        $this->assertSame('VODAFONE ENABLER ESPANA, S.L.', $phoneNumberInformation->carrier['name']);
     }
 }

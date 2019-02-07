@@ -21,7 +21,7 @@ define('TEST_TWILIO_PHONE_NUMBER', '.');
 define('TEST_USER_PHONE_NUMBER', '...');
 define('TEST_AGENT_PHONE_NUMBER', '...');
 
-define('TEST_FLEX_WORKSPACE', '...');
+define('TEST_FLEX_WORKSPACE_SID', '...');
 define('TEST_FLEX_WORKFLOW_SID', '...');
 
 define('J_URI_ROOT', 'http://localhost:8080/');

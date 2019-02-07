@@ -29,13 +29,9 @@ class SMSHelper extends TwilioHelperAbstract
         $this->phoneNumber = $phoneNumber;
     }
 
-    public function sendSms($message, $firstName, $phoneNumberTo)
+    public function sendSms($message, $phoneNumberTo)
     {
         if (empty($message)) {
-            return false;
-        }
-
-        if (empty($firstName)) {
             return false;
         }
 
@@ -47,7 +43,7 @@ class SMSHelper extends TwilioHelperAbstract
             $phoneNumberTo,
             [
                 'from' => $this->phoneNumber,
-                'body' => $message.' - '.$firstName.' ( '.$phoneNumberTo.' )',
+                'body' => $message,
             ]
         );
 

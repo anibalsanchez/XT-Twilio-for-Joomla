@@ -22,10 +22,53 @@
   <config>
     <fields name="params">
       <fieldset name="basic">
-        <field name="account_sid" type="text" label="PLG_AJAX_XTTWILIO_CLICK2CALL_ACCOUNT_SID_LABEL" description="PLG_AJAX_XTTWILIO_CLICK2CALL_ACCOUNT_SID_DESCRIPTION"/>
-        <field name="auth_token" type="text" label="PLG_AJAX_XTTWILIO_CLICK2CALL_AUTH_TOKEN_LABEL" description="PLG_AJAX_XTTWILIO_CLICK2CALL_AUTH_TOKEN_DESCRIPTION"/>
-        <field name="phone_number" type="text" label="PLG_AJAX_XTTWILIO_CLICK2CALL_PHONE_NUMBER_LABEL" description="PLG_AJAX_XTTWILIO_CLICK2CALL_PHONE_NUMBER_DESCRIPTION"/>
-        <field name="agent_phone_number" type="text" label="PLG_AJAX_XTTWILIO_CLICK2CALL_AGENT_PHONE_NUMBER_LABEL" description="PLG_AJAX_XTTWILIO_CLICK2CALL_AGENT_PHONE_NUMBER_DESCRIPTION"/>
+        <field name="account_sid" type="text" label="PLG_AJAX_[TRANSLATION_KEY]_ACCOUNT_SID_LABEL" description="PLG_AJAX_[TRANSLATION_KEY]_ACCOUNT_SID_DESCRIPTION"/>
+        <field name="auth_token" type="text" label="PLG_AJAX_[TRANSLATION_KEY]_AUTH_TOKEN_LABEL" description="PLG_AJAX_[TRANSLATION_KEY]_AUTH_TOKEN_DESCRIPTION"/>
+        <field name="phone_number" type="text" label="PLG_AJAX_[TRANSLATION_KEY]_PHONE_NUMBER_LABEL" description="PLG_AJAX_[TRANSLATION_KEY]_PHONE_NUMBER_DESCRIPTION" filter="integer"/>
+        <field name="agent_phone_number" type="text" label="PLG_AJAX_[TRANSLATION_KEY]_AGENT_PHONE_NUMBER_LABEL" description="PLG_AJAX_[TRANSLATION_KEY]_AGENT_PHONE_NUMBER_DESCRIPTION" filter="integer"/>
+      </fieldset>
+      <fieldset name="advanced">
+				<field
+					name="enable_lookup"
+					type="radio"
+					label="PLG_AJAX_[TRANSLATION_KEY]_FIELD_ENABLE_LOOKUP_LABEL"
+					description="PLG_AJAX_[TRANSLATION_KEY]_FIELD_ENABLE_LOOKUP_DESC"
+					class="btn-group btn-group-yesno"
+					default="0"
+					filter="integer"
+					>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+
+				<field
+					name="enable_flex"
+					type="radio"
+					label="PLG_AJAX_[TRANSLATION_KEY]_FIELD_ENABLE_FLEX_LABEL"
+					description="PLG_AJAX_[TRANSLATION_KEY]_FIELD_ENABLE_FLEX_DESC"
+					class="btn-group btn-group-yesno"
+					default="0"
+					filter="integer"
+					>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+
+				<field
+					name="workspace_sid"
+					type="text"
+					label="PLG_AJAX_[TRANSLATION_KEY]_FIELD_FLEX_WORKSPACE_SID_LABEL"
+					description="PLG_AJAX_[TRANSLATION_KEY]_FIELD_FLEX_WORKSPACE_SID_DESC"
+          showon="enable_flex:1"
+				/>
+
+				<field
+					name="workflow_sid"
+					type="text"
+					label="PLG_AJAX_[TRANSLATION_KEY]_FIELD_FLEX_WORKFLOW_SID_LABEL"
+					description="PLG_AJAX_[TRANSLATION_KEY]_FIELD_FLEX_WORKFLOW_SID_DESC"
+          showon="enable_flex:1"
+				/>
       </fieldset>
     </fields>
   </config>
