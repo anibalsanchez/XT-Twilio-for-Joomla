@@ -25,7 +25,7 @@ class LookupHelperTest extends TestCase
         $phoneNumberInformation = LookupHelper::create(TEST_ACCOUNT_SID, TEST_AUTH_TOKEN)->retrieve(TEST_USER_PHONE_NUMBER);
 
         $this->assertSame(TEST_USER_COUNTRY_CODE, $phoneNumberInformation->countryCode);
-        $this->assertStringStartsWith('+', $task->phoneNumberInformation->phoneNumber);
+        $this->assertStringStartsWith('+', $phoneNumberInformation->phoneNumber);
         $this->assertSame(TEST_USER_NATIONAL_FORMAT, $phoneNumberInformation->nationalFormat);
         $this->assertSame(TEST_USER_CARRIER_NAME, $phoneNumberInformation->carrier['name']);
     }
