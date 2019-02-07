@@ -37,7 +37,7 @@ final class TaskFactory
     public function defineNewTask($phoneNumberFrom, $message = null, $firstName = null)
     {
         $lookupResult = $this->retrieveLookupPhoneNumber($phoneNumberFrom);
-        $flexTask = $this->createFlexTask($lookupResult->phoneNumber, $message, $firstName);
+        $flexTask = $this->createFlexTask($lookupResult->phoneNumber, $message, $firstName, $lookupResult);
 
         return Task::create($lookupResult, $flexTask, $message, $firstName);
     }
@@ -48,7 +48,7 @@ final class TaskFactory
             ->retrieve($phoneNumberFrom);
     }
 
-    protected function createFlexTask($phoneNumber, $message = null, $firstName = null)
+    protected function createFlexTask($phoneNumber, $message = null, $firstName = null, $lookupResult = null)
     {
         $attributes = [
             'Phone Number' => $phoneNumber,
@@ -60,6 +60,12 @@ final class TaskFactory
 
         if ($firstName) {
             $attributes['Name'] = $firstName;
+        }
+
+        if ($lookupResult) {
+            $attributes['countryCode'] = $lookupResult->countryCode;
+            $attributes['nationalFormat'] = $lookupResult->nationalFormat;
+            $attributes['carrierName'] = $lookupResult->carrier['name'];
         }
 
         return TaskRouterHelper::create($this->accountSid, $this->authToken)
