@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // https://github.com/jackocnr/intl-tel-input - International Telephone Input
   const intlTelInputControl = window.intlTelInput(phone, {
-    utilsScript: 'media/lib_xttwilio/intl-tel-input/js/utils.js',
+    utilsScript: '/media/lib_xttwilio/intl-tel-input/js/utils.js',
   });
 
   phone.addEventListener("countrychange", phone, e => updateStateHandler(e, phone, intlTelInputControl));
