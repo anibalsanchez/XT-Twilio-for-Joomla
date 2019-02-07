@@ -113,7 +113,7 @@ class PlgAjaxXTTwilio extends CMSPlugin
 
         try {
             // Default values
-            $smsMessage = $message.' - '.$firstName.'('.$phoneNumberFrom.')';
+            $smsMessage = $message.' - '.$firstName.'( +'.$phoneNumberFrom.' )';
 
             if ($this->enableLookupflex) {
                 $task = $this->defineNewTask($phoneNumberFrom, $message, $firstName);
