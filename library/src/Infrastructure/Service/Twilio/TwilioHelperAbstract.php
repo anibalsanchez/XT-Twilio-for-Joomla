@@ -13,19 +13,26 @@
 namespace XTTwilio\Infrastructure\Service\Twilio;
 
 use Extly\Infrastructure\Creator\CreatorTrait;
-use Twilio\Twiml;
+use Twilio\Rest\Client as TwilioRest;
 
-class TwiMLResponseHelper
+class TwilioHelperAbstract
 {
     use CreatorTrait;
 
-    public function getOutboundResponse($agentPhoneNumber)
-    {
-        $sayMessage = 'Thanks for contacting our sales department. Our next available representative will take your call.';
-        $twiml = new Twiml();
-        $twiml->say($sayMessage, ['voice' => 'alice']);
-        $twiml->dial($agentPhoneNumber);
+    protected $accountSid;
 
-        return (string) $twiml;
+    protected $authToken;
+
+    public function __construct($accountSid, $authToken)
+    {
+        $this->accountSid = $accountSid;
+        $this->authToken = $authToken;
+    }
+
+    protected function getClient()
+    {
+        $client = new TwilioRest($this->accountSid, $this->authToken);
+
+        return $client;
     }
 }

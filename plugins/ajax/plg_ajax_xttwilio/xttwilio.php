@@ -4,7 +4,7 @@
  * @package     XT Twilio for Joomla
  *
  * @author      Extly, CB. <team@extly.com>
- * @copyright   Copyright (c)2007-2018 Extly, CB. All rights reserved.
+ * @copyright   Copyright (c)2007-2019 Extly, CB. All rights reserved.
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  *
  * @see         https://www.extly.com
@@ -17,6 +17,7 @@ use Joomla\CMS\Input\Input as CMSInput;
 use Joomla\CMS\Plugin\CMSPlugin;
 use XTTwilio\Infrastructure\Service\Twilio\Click2CallHelper;
 use XTTwilio\Infrastructure\Service\Twilio\SMSHelper;
+use XTTwilio\Infrastructure\Service\Twilio\TaskFactory;
 use XTTwilio\Infrastructure\Service\Twilio\TwiMLResponseHelper;
 
 /**
@@ -30,6 +31,7 @@ class PlgAjaxXTTwilio extends CMSPlugin
     protected $authToken;
     protected $phoneNumber;
     protected $agentPhoneNumber;
+    protected $enableLookupflex;
 
     /**
      * onAjaxXTTwilio.
@@ -47,12 +49,15 @@ class PlgAjaxXTTwilio extends CMSPlugin
         switch ($task) {
             case 'sendsms':
                 return $this->onAjaxSendSMS();
+
                 break;
             case 'click2call':
                 return $this->onAjaxClick2Call();
+
                 break;
             case 'getTwiMLResponseOutbound':
                 return $this->onGetTwiMLResponseOutbound();
+
                 break;
         }
     }
@@ -63,6 +68,8 @@ class PlgAjaxXTTwilio extends CMSPlugin
         $this->authToken = $this->params->get('auth_token');
         $this->phoneNumber = $this->params->get('phone_number');
         $this->agentPhoneNumber = $this->params->get('agent_phone_number');
+        $this->agentPhoneNumber = $this->params->get('agent_phone_number');
+        $this->enableLookupflex = (bool) $this->params->get('enable_lookupflex');
 
         if (empty($this->accountSid)) {
             return false;
@@ -104,8 +111,22 @@ class PlgAjaxXTTwilio extends CMSPlugin
             throw new Exception('Error: Invalid Phone Number From');
         }
 
-        $result = SMSHelper::create($this->accountSid, $this->authToken, $this->phoneNumber)
-            ->sendSms($message, $firstName, $phoneNumberFrom);
+        try {
+            // Default values
+            $smsMessage = $message.' - '.$firstName.'( +'.$phoneNumberFrom.' )';
+
+            if ($this->enableLookupflex) {
+                $task = $this->defineNewTask($phoneNumberFrom, $message, $firstName);
+
+                // Improved rich message and E164 Phone Number
+                $smsMessage = $task->getSmsMessage();
+            }
+
+            $result = SMSHelper::create($this->accountSid, $this->authToken, $this->phoneNumber)
+                ->sendSms($smsMessage, $this->agentPhoneNumber);
+        } catch (Exception $e) {
+            throw new Exception('Error: '.$e->getMessage());
+        }
 
         return $result->sid;
     }
@@ -122,10 +143,30 @@ class PlgAjaxXTTwilio extends CMSPlugin
             throw new Exception('Error: Invalid Phone Number To');
         }
 
-        $result = Click2CallHelper::create($this->accountSid, $this->authToken, $this->phoneNumber, JUri::root())
-            ->call($phoneNumberTo);
+        try {
+            // Default values
+            $e164PhoneNumber = $phoneNumberTo;
+
+            if ($this->enableLookupflex) {
+                $task = $this->defineNewTask($phoneNumberTo, 'Please, call me.');
+
+                // E164 Phone Number
+                $e164PhoneNumber = $task->getE164PhoneNumber();
+            }
+
+            $result = Click2CallHelper::create($this->accountSid, $this->authToken, $this->phoneNumber, JUri::root())
+                ->call($e164PhoneNumber);
+        } catch (Exception $e) {
+            throw new Exception('Error: '.$e->getMessage());
+        }
 
         return $result->sid;
+    }
+
+    protected function defineNewTask($phoneNumberFrom, $message = null, $firstName = null)
+    {
+        return TaskFactory::create($this->accountSid, $this->authToken, $this->params->get('workspace_sid'), $this->params->get('workflow_sid'))
+            ->defineNewTask($phoneNumberFrom, $message, $firstName);
     }
 
     /**

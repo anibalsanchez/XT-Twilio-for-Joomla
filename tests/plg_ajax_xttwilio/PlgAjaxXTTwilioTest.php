@@ -4,7 +4,7 @@
  * @package     XT Twilio for Joomla
  *
  * @author      Extly, CB. <team@extly.com>
- * @copyright   Copyright (c)2007-2018 Extly, CB. All rights reserved.
+ * @copyright   Copyright (c)2007-2019 Extly, CB. All rights reserved.
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
  *
  * @see         https://www.extly.com
@@ -31,7 +31,7 @@ class PlgAjaxXTTwilioTest extends TestCase
             'index.php?option=com_ajax&plugin=xttwilio&task=sendsms&format=json',
             [
                 SMSHelper::PARAM_MESSAGE => 'Test PlgAjaxXTTwilioTest/testComAjaxSendSMS: '.rand(0, 999),
-                SMSHelper::PARAM_FIRST_NAME => TEST_FIRST_NAME,
+                SMSHelper::PARAM_FIRST_NAME => TEST_USER_FIRST_NAME,
                 SMSHelper::PARAM_PHONE_NUMBER_FROM => TEST_USER_PHONE_NUMBER,
             ]
         );
@@ -42,8 +42,8 @@ class PlgAjaxXTTwilioTest extends TestCase
         $this->assertSame(200, $httpStatusCode);
         $this->assertTrue($packet->success);
 
-        $data = array_shift($packet->data);
-        $this->assertTrue($data->status);
+        $sid = array_shift($packet->data);
+        $this->assertStringStartsWith('S', $sid);
     }
 
     public function testComAjaxClick2Call()

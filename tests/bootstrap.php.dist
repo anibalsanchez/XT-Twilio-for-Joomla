@@ -15,11 +15,21 @@ namespace tests\library\XTTwilio;
 // Library Initialization
 defined('_JEXEC') or define('_JEXEC', 1);
 
-define('TEST_ACCOUNT_SID', '..');
-define('TEST_AUTH_TOKEN', '..');
-define('TEST_TWILIO_PHONE_NUMBER', '.');
+define('TEST_ACCOUNT_SID', '...');
+define('TEST_AUTH_TOKEN', '...');
+
+define('TEST_TWILIO_PHONE_NUMBER', '...');
+
+define('TEST_USER_FIRST_NAME', '...');
 define('TEST_USER_PHONE_NUMBER', '...');
+define('TEST_USER_COUNTRY_CODE', '..');
+define('TEST_USER_NATIONAL_FORMAT', '...');
+define('TEST_USER_CARRIER_NAME', '...');
+
 define('TEST_AGENT_PHONE_NUMBER', '...');
+
+define('TEST_FLEX_WORKSPACE_SID', '...');
+define('TEST_FLEX_WORKFLOW_SID', '...');
 
 define('J_URI_ROOT', 'http://localhost:8080/');
 
