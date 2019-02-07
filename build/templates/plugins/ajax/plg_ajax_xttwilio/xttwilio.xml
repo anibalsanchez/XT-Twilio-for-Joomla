@@ -29,23 +29,10 @@
       </fieldset>
       <fieldset name="advanced">
 				<field
-					name="enable_lookup"
+					name="enable_lookupflex"
 					type="radio"
-					label="PLG_AJAX_[TRANSLATION_KEY]_FIELD_ENABLE_LOOKUP_LABEL"
-					description="PLG_AJAX_[TRANSLATION_KEY]_FIELD_ENABLE_LOOKUP_DESC"
-					class="btn-group btn-group-yesno"
-					default="0"
-					filter="integer"
-					>
-					<option value="1">JYES</option>
-					<option value="0">JNO</option>
-				</field>
-
-				<field
-					name="enable_flex"
-					type="radio"
-					label="PLG_AJAX_[TRANSLATION_KEY]_FIELD_ENABLE_FLEX_LABEL"
-					description="PLG_AJAX_[TRANSLATION_KEY]_FIELD_ENABLE_FLEX_DESC"
+					label="PLG_AJAX_[TRANSLATION_KEY]_FIELD_ENABLE_LOOKUPFLEX_LABEL"
+					description="PLG_AJAX_[TRANSLATION_KEY]_FIELD_ENABLE_LOOKUPFLEX_DESC"
 					class="btn-group btn-group-yesno"
 					default="0"
 					filter="integer"
@@ -59,7 +46,7 @@
 					type="text"
 					label="PLG_AJAX_[TRANSLATION_KEY]_FIELD_FLEX_WORKSPACE_SID_LABEL"
 					description="PLG_AJAX_[TRANSLATION_KEY]_FIELD_FLEX_WORKSPACE_SID_DESC"
-          showon="enable_flex:1"
+          showon="enable_lookupflex:1"
 				/>
 
 				<field
@@ -67,7 +54,7 @@
 					type="text"
 					label="PLG_AJAX_[TRANSLATION_KEY]_FIELD_FLEX_WORKFLOW_SID_LABEL"
 					description="PLG_AJAX_[TRANSLATION_KEY]_FIELD_FLEX_WORKFLOW_SID_DESC"
-          showon="enable_flex:1"
+          showon="enable_lookupflex:1"
 				/>
       </fieldset>
     </fields>

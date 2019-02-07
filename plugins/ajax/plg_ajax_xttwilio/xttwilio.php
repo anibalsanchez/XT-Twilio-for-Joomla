@@ -31,6 +31,7 @@ class PlgAjaxXTTwilio extends CMSPlugin
     protected $authToken;
     protected $phoneNumber;
     protected $agentPhoneNumber;
+    protected $enableLookupflex;
 
     /**
      * onAjaxXTTwilio.
@@ -67,6 +68,8 @@ class PlgAjaxXTTwilio extends CMSPlugin
         $this->authToken = $this->params->get('auth_token');
         $this->phoneNumber = $this->params->get('phone_number');
         $this->agentPhoneNumber = $this->params->get('agent_phone_number');
+        $this->agentPhoneNumber = $this->params->get('agent_phone_number');
+        $this->enableLookupflex = (bool) $this->params->get('enable_lookupflex');
 
         if (empty($this->accountSid)) {
             return false;
@@ -109,11 +112,18 @@ class PlgAjaxXTTwilio extends CMSPlugin
         }
 
         try {
-            $task = $this->defineNewTask($phoneNumberFrom, $message, $firstName);
-            $smsMessage = $task->getSmsMessage();
+            // Default values
+            $smsMessage = $message.' - '.$firstName.'('.$phoneNumberFrom.')';
+
+            if ($this->enableLookupflex) {
+                $task = $this->defineNewTask($phoneNumberFrom, $message, $firstName);
+
+                // Improved rich message and E164 Phone Number
+                $smsMessage = $task->getSmsMessage();
+            }
 
             $result = SMSHelper::create($this->accountSid, $this->authToken, $this->phoneNumber)
-                ->sendSms($smsMessage, $task->getE164PhoneNumber());
+                ->sendSms($smsMessage, $this->agentPhoneNumber);
         } catch (Exception $e) {
             throw new Exception('Error: '.$e->getMessage());
         }
@@ -134,8 +144,15 @@ class PlgAjaxXTTwilio extends CMSPlugin
         }
 
         try {
-            $task = $this->defineNewTask($phoneNumberTo, 'Please, call me.');
-            $e164PhoneNumber = $task->getE164PhoneNumber();
+            // Default values
+            $e164PhoneNumber = $phoneNumberTo;
+
+            if ($this->enableLookupflex) {
+                $task = $this->defineNewTask($phoneNumberTo, 'Please, call me.');
+
+                // E164 Phone Number
+                $e164PhoneNumber = $task->getE164PhoneNumber();
+            }
 
             $result = Click2CallHelper::create($this->accountSid, $this->authToken, $this->phoneNumber, JUri::root())
                 ->call($e164PhoneNumber);
