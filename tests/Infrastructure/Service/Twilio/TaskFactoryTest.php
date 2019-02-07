@@ -25,10 +25,10 @@ class TaskFactoryTest extends TestCase
         $taskFactory = TaskFactory::create(TEST_ACCOUNT_SID, TEST_AUTH_TOKEN, TEST_FLEX_WORKSPACE_SID, TEST_FLEX_WORKFLOW_SID);
         $task = $taskFactory->defineNewTask(TEST_USER_PHONE_NUMBER, 'Hi!', 'John');
 
-        $this->assertSame('ES', $task->phoneNumberInformation->countryCode);
+        $this->assertSame(TEST_USER_COUNTRY_CODE, $task->phoneNumberInformation->countryCode);
         $this->assertStringStartsWith('+', $task->phoneNumberInformation->phoneNumber);
-        $this->assertSame('684 64 40 96', $task->phoneNumberInformation->nationalFormat);
-        $this->assertSame('VODAFONE ENABLER ESPANA, S.L.', $task->phoneNumberInformation->carrier['name']);
+        $this->assertSame(TEST_USER_NATIONAL_FORMAT, $task->phoneNumberInformation->nationalFormat);
+        $this->assertSame(TEST_USER_CARRIER_NAME, $task->phoneNumberInformation->carrier['name']);
 
         $this->assertStringStartsWith('WT', $task->callCenterTask->sid);
     }
